@@ -1,0 +1,282 @@
+/* CSS Document - Author: Shaibal Mandal */
+
+body
+{
+	font-size: 11px;
+	font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
+	clear: both;
+	background: url('images/bggrad2.jpg') repeat-x;
+	background-color: #464646;
+    padding: 0;
+    margin: 0;
+}
+
+a
+{
+	text-decoration: none;
+	color: #747474;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	color: #000;
+}
+
+#container2
+{
+   width: 90%;
+}
+
+#nav1
+{
+	width: 124px;
+	height: 40px;
+	float: left;
+	background: url(images/nav1.jpg) no-repeat;
+}
+
+#nav2
+{
+	width: 112px;
+	height: 40px;
+	float: left;
+	background: url(images/nav2.jpg) no-repeat;
+}
+
+#nav3
+{
+	width: 114px;
+	height: 40px;
+	float: left;
+	background: url(images/nav3.jpg) no-repeat;
+}
+
+#nav4
+{
+	width: 112px;
+	height: 40px;
+	float: left;
+	background: url(images/nav4.jpg) no-repeat;
+}
+
+#nav5
+{
+	width: 112px;
+	height: 40px;
+	float: left;
+	background: url(images/nav5.jpg) no-repeat;
+}
+
+#nav6
+{
+	width: 126px;
+	height: 40px;
+	float: left;
+	background: url(images/nav6.jpg) no-repeat;
+}
+
+.buttonText
+{
+	text-align: center;
+	padding-top: 14px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#navcontainer
+{
+    position: absolute;
+    width: 70%;
+	margin-top: 10px;
+    left:50%;
+    margin-left:-350px;
+    clear: both;
+}
+
+/*#main
+{
+	padding: 5px;
+	width: 950px;
+	text-align: justify;
+	color: #333;
+	line-height: 1.6em;
+	background-color: #E2E2E2;
+	border: 1px solid #888;
+	float: left;
+}*/
+
+#fpic
+{
+    position: absolute;
+
+	margin-top: 100px;
+    left:50%;
+    margin-left:-215px;
+    clear: both;
+	width: 437px;
+	height: 136px;
+	background-color: #999999;
+	background: url('images/imgsicaa.png') no-repeat;
+}
+
+#fpicmenu
+{
+    position: absolute;
+	margin-top: 10px;
+    left:50%;
+    margin-left:-215px;
+    clear: both;
+	width: 437px;
+	height: 136px;
+	background-color: #999999;
+	background: url('images/imgsicaa.png') no-repeat;
+}
+
+#fpicestud
+{
+    position: absolute;
+	margin-top: 10px;
+    left:50%;
+    margin-left:-160px;
+    clear: both;
+	width: 312px;
+	height: 60px;
+	background-color: #999999;
+	background: url('images/imgsicaaestud.png') no-repeat;
+}
+
+#fpicagenda
+{
+    position: absolute;
+	margin-top: 10px;
+    left:50%;
+    margin-left:-160px;
+    clear: both;
+	width: 312px;
+	height: 60px;
+	background-color: #999999;
+	background: url('images/imgsicaaagenda.png') no-repeat;
+}
+
+h1
+{
+	font-size: 20px;
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+#footer
+{
+    margin-top: 10px;
+	background-color: #484848;
+	color: #fff;
+	text-align: center;
+	height: 20px;
+	padding-top: 5px;
+    width: auto;
+}
+
+p
+{
+	margin:0;
+	padding: 0;
+}
+
+/******* MENU *******/
+#containermenu{
+     position: absolute;
+     width: 90%;
+     left: 50%;
+     margin-left: -45%;
+}
+#containerforms{
+     position: absolute;
+     margin-top:75px;
+     width: 90%;
+     left: 50%;
+     margin-left: -35%;
+}
+#containerdock{
+     position: absolute;
+     width: 90%;
+     left: 50%;
+     margin-left: -45%;
+     margin-top: 560px;
+}
+#container{
+     position: absolute;
+     width: 90%;
+     left: 50%;
+     margin-left: -45%;
+     margin-top: 250px;
+}
+#container ul{
+    list-style:none;
+    list-style-position:outside;
+}
+#container ul.menu li{
+    float:left;
+    margin-right:8px;
+    margin-bottom:-1px;
+}
+#container ul.menu li{
+    font-weight:700;
+    display:block;
+    padding:10px 15px;
+    background:#303030;
+    margin-bottom:-1px;
+    border:1px solid #3e3e3e;
+    border-width:1px 1px 1px 1px;
+    position:relative;
+    color:#FF0099;
+    cursor:pointer;
+    border-radius:3px 3px 0 0;
+    -moz-border-radius:3px 3px 0 0;
+    -webkit-border-radius:3px 3px 0 0;
+}
+#container ul.menu li:hover{
+    color:#000;
+}
+#container ul.menu li.active{
+    background:#252525;
+    top:1px;
+    border-bottom:0;
+    color:#fff;
+}
+/******* /MENU *******/
+
+/******* CONTENT *******/
+.content{
+    margin:0pt auto;
+    background:#303030;
+    border:1px solid #2e2e2e;
+    text-align:left;
+    padding:1.3em;
+    padding-bottom:20px;
+    font-size:12px;
+    line-height:2em;
+    color:#8C8C8C;
+    border-radius:0 5px 5px 5px;
+    -moz-border-radius:0 5px 5px 5px;
+    -webkit-border-radius:0 5px 5px 5px;
+}
+.content h3{
+    line-height:1em;
+    vertical-align:middle;
+    height:48px;
+    padding:10px 10px 10px 52px;
+    font-size:32px;
+    color:#E4E1CD;
+}
+/******* /CONTENT *******/
+
+.content.inicio h3{
+    background:#252525;
+    top:1px;
+    border:1px;
+    color:#fff;
+}
+.content.inicio{
+    display:block;
+}
