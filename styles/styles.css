@@ -231,9 +231,9 @@ p
     position:relative;
     color:#FF0099;
     cursor:pointer;
-    border-radius:3px 3px 0 0;
     -moz-border-radius:3px 3px 0 0;
     -webkit-border-radius:3px 3px 0 0;
+    border-radius:3px 3px 0 0;
 }
 #container ul.menu li:hover{
     color:#000;
@@ -257,9 +257,9 @@ p
     font-size:12px;
     line-height:2em;
     color:#8C8C8C;
-    border-radius:0 5px 5px 5px;
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
+    border-radius:0 5px 5px 5px;
 }
 .content h3{
     line-height:1em;
