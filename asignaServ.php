@@ -10,9 +10,14 @@ $result = $db->query($sql);
 if ($result->num_rows > 0) {
     $borrar = "delete from estudiosxservicio where servicios_idservicio='$data2' and estudios_idestudio='$data'";
     $delete = $db->query($borrar);
+    $borrar = "delete from datosxestudiosxservicio where estudiosxServicio_idestudiosxServicio in 
+    (SELECT idestudiosxServicio FROM estudiosxservicio e where e.servicios_idservicio='$data2' and e.estudios_idestudio='$data');";
+    $delete = $db->query($borrar);
 } else {
     $insertar = "insert into estudiosxservicio(idestudiosxServicio,costo,servicios_idservicio,estudios_idestudio) values(null,$data3,$data2,$data)";
     $agregar = $db->query($insertar);
+    $insertar2 = "insert into datosxestudiosxservicio SELECT iddato,idestudiosxServicio,'','' FROM estudiosxservicio e,datos d where e.servicios_idservicio='$data2' and e.estudios_idestudio='$data' and e.estudios_idestudio=d.estudios_idestudio;";
+    $agregar2 = $db->query($insertar2);
 }
 ?>
 
