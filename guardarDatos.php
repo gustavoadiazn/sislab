@@ -27,5 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } while ($rowest = $resultest->fetch_array());
     }
+    echo "Datos guardados exitosamente";
     $db->close();
 }
