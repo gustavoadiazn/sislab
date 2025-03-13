@@ -27,61 +27,18 @@ $usuario = $_SESSION["usuario"];
                         while ($row = mysqli_fetch_array($rs)) {
                                 $pathDir = $row["pathDir"];
                                 $nombre = $row["nombre"];
-                                if ($row["idpagina"] == "1000") { ?>
+                                $idpu = $row["idpagina"];
+                                if ($row["idpagina"] == $idpu) { ?>
                                         <li>
                                                 <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
                                                         <figure>
-                                                                <img src="images/pacientes.jpg" width="100px" height="100px" alt="" />
+                                                                <img src="images/<?php echo $idpu; ?>.jpg" width="100px" height="100px" alt="" />
                                                                 <figcaption style="font-size: medium; color:darkorange"><?php echo $nombre; ?></figcaption>
                                                         </figure>
                                                 </a>
                                         </li>
-                                <?php } else if ($row["idpagina"] == "1001") { ?>
-                                        <li>
-                                                <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
-                                                        <figure>
-                                                                <img src="images/estudios.jpg" width="100px" height="100px" alt="" />
-                                                                <figcaption style="font-size: medium; color:darkgoldenrod"><?php echo $nombre; ?></figcaption>
-                                                        </figure>
-                                                </a>
-                                        </li>
-                                <?php } else if ($row["idpagina"] == "1002") { ?>
-                                        <li>
-                                                <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
-                                                        <figure>
-                                                                <img src="images/servicios.jpg" width="100px" height="100px" alt="" />
-                                                                <figcaption style="font-size: medium; color:darkgoldenrod"><?php echo $nombre; ?></figcaption>
-                                                        </figure>
-                                                </a>
-                                        </li>
-                                <?php } else if ($row["idpagina"] == "1003") { ?>
-                                        <li>
-                                                <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
-                                                        <figure>
-                                                                <img src="images/qfbs.jpg" width="100px" height="100px" alt="" />
-                                                                <figcaption style="font-size: medium; color:darkgoldenrod"><?php echo $nombre; ?></figcaption>
-                                                        </figure>
-                                                </a>
-                                        </li>
-                                <?php } else if ($row["idpagina"] == "1004") { ?>
-                                        <li>
-                                                <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
-                                                        <figure>
-                                                                <img src="images/medicos.jpg" width="100px" height="100px" alt="" />
-                                                                <figcaption style="font-size: medium; color:darkgoldenrod"><?php echo $nombre; ?></figcaption>
-                                                        </figure>
-                                                </a>
-                                        </li>
-                                <?php } else if ($row["idpagina"] == "1005") { ?>
-                                        <li>
-                                                <a href="<?php echo $pathDir; ?>" class="bx3" rel="860-500">
-                                                        <figure>
-                                                                <img src="images/turnos.jpg" width="100px" height="100px" alt="" />
-                                                                <figcaption style="font-size: medium; color:darkgoldenrod"><?php echo $nombre; ?></figcaption>
-                                                        </figure>
-                                                </a>
-                                        </li>
-                        <?php }
+
+                        <?php   }
                         }   ?>
                         <li>
                                 <a href="logout.php" class="bx3" rel="860-500">

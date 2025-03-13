@@ -18,8 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="styles/styles2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="dhtmlgoodies_calendar/dhtmlgoodies_calendar.css?random=20051112" media="screen">
-    </link>
+    <link rel="stylesheet" href="dhtmlgoodies_calendar/dhtmlgoodies_calendar.css?random=20051112" media="screen" />
     <script type="text/javascript" src="dhtmlgoodies_calendar/dhtmlgoodies_calendar.js?random=20121025"></script>
     <style>
         /* Add CSS rules for the square border */
@@ -105,7 +104,11 @@
 
     <?php
     include("conectarsislab.php");
-    $idp = $_POST["idp"];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $idp = $_POST['idp'];
+    } else {
+        $idp = $_GET['ipd'];
+    }
     $fechahoy = date("Y-m-d");
 
     $sqlins = "Insert into servicios values(null,'$fechahoy','','True',4,1,1,1,$idp)";
