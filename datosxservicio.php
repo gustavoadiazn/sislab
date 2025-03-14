@@ -234,7 +234,7 @@
                             <p id="mensaje"></p>
                             <hr class="divider" />
                             <!-- Submit Button-->
-                            <div><button class="btn btn-info btn-xl" type="submit">Guardar Todo</button><a class="btn btn-primary btn-xl" id="submitButton" target="_self" name="Guardar" href="home.php" onclick="window.open('imprimirEstudios.php', '_blank');">Imprimir y Cerrar</a></div>
+                            <div><button class="btn btn-info btn-xl" type="submit">Guardar Todo</button><a class="btn btn-primary btn-xl" id="submitButton" target="_self" name="Guardar" href="home.php" onclick="window.open('imprimirEstudios.php?ids=<?php echo $ids; ?>', '_blank');">Imprimir y Cerrar</a></div>
                             <input type="hidden" name="ids" value="<?php echo $ids; ?>">
                         </form>
                     </div>

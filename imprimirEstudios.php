@@ -51,12 +51,12 @@ class PDF extends FPDF
 }
 
 //Creaci�n del objeto de la clase heredada
-$pdf = new PDF('L');
+$pdf = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 include("conectarsislab.php");
-$fechaI = $_POST["theDate"];
-$fechaT = $_POST["theDate2"];
+$ids = $_POST["ids"];
+
 $sql = "SELECT count(distinct pacientes_idpaciente) as numpac FROM servicios s where fecha between '$fechaI' and '$fechaT';";
 $result = mysqli_query($db, $sql);
 if ($row = mysqli_fetch_array($result)) {    
