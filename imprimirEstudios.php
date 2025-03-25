@@ -53,76 +53,54 @@ class PDF extends FPDF
 //Creaci�n del objeto de la clase heredada
 $pdf = new PDF('P');
 $pdf->AliasNbPages();
-$pdf->AddPage();
 include("conectarsislab.php");
-$ids = $_POST["ids"];
-
-$sql = "SELECT count(distinct pacientes_idpaciente) as numpac FROM servicios s where fecha between '$fechaI' and '$fechaT';";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $ids = $_POST['ids'];
+} else {
+    $ids = $_GET['ids'];
+}
+$sql = "SELECT * FROM estudiosxservicio es, estudios e where servicios_idservicio='$ids' AND es.estudios_idestudio=e.idestudio;";
 $result = mysqli_query($db, $sql);
-if ($row = mysqli_fetch_array($result)) {    
-        $pdf->SetFont('Arial', '', 14);
-        $pdf->Cell(80);
-        $pdf->Cell(100, 5, 'Reporte de Pacientes, Servicios y Estudios', 0, 1, 'C');        
-        $pdf->SetFont('Arial', '', 11);
-        $pdf->Cell(100);
-        $pdf->Cell(100, 5, 'Fechas: ' . $fechaI. ' a '. $fechaT, 0, 1, 'L');
-        $pdf->Ln(10);
+while($row = mysqli_fetch_array($result)){
+    $pdf->AddPage();
+    $idesxs = $row["idestudiosxServicio"];
+    $idest = $row["estudios_idestudio"];
+    $nomest = utf8_decode($row["nombre"]);
+    $descest = utf8_decode($row["desc"]);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(80);
+    $pdf->Cell(100, 5, 'Estudio: ' . $nomest, 0, 1, 'C');
+    $pdf->Ln(10);
+    //buscar datosporestudio
+    $sql2 = "SELECT * FROM datosxestudiosxservicio des,datos d where des.estudiosxServicio_idestudiosxServicio='$idesxs' AND des.datos_iddato=d.iddato;";
+    $result2 = mysqli_query($db, $sql2);
+    if($row2=mysqli_fetch_array($result2)){                
+        $pdf->Ln(5);
         $pdf->ColorRow();
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(100);
-        $pdf->Cell(60, 5, 'Pacientes atendidos', 1, 1, 'C',1);
-        $numpac = $row["numpac"]; 
-        $pdf->ColorRest();     
-        $pdf->Cell(100);
-        $pdf->Cell(60, 5, $numpac, 1, 1, 'C',1);                    
+        $pdf->SetFont('Arial','B',8);        
+        $pdf->Cell(50, 5, "Estudio", 1, 0, 'C',1);
+        $pdf->Cell(25, 5, "Dato", 1, 0, 'C',1);
+        $pdf->Cell(50, 5, "Observaciones", 1, 0, 'C',1);
+        $pdf->Cell(20, 5, "Indicadores", 1, 0, 'C',1);
+        $pdf->Cell(40, 5, utf8_decode("Descipción"), 1, 1, 'C',1);
+        $pdf->ColorRest();
+        $fill=false;
+        do{   
+            $nombre = $row2["nombre"];
+            $num = $row2["dato"];
+            $obs=$row2["observaciones"];
+            $ind=$row2["indicadores"];
+            $des=$row2["desc"];             
+            $pdf->Cell(50, 5, utf8_decode($nombre), 1, 0, 'L',$fill);
+            $pdf->Cell(25, 5, utf8_decode($num), 1, 0, 'L',$fill);
+            $pdf->Cell(50, 5, utf8_decode($obs), 1, 0, 'C',$fill);
+            $pdf->Cell(20, 5, utf8_decode($ind), 1, 0, 'C',$fill);
+            $pdf->Cell(40, 5, utf8_decode($des), 1, 1, 'C',$fill);
+            $fill=!$fill;
+        }while($row2=mysqli_fetch_array($result2));
+    }
+
 }
 
-$sql2 = "SELECT count(idservicio) as num, tipoServicios_idtipoServicio, nombre
-FROM servicios s, tiposervicios ts
-where fecha between '$fechaI' and '$fechaT' and s.tipoServicios_idtipoServicio=ts.idtipoServicio
-group by tipoServicios_idtipoServicio;";
-$result2 = mysqli_query($db, $sql2);
-if ($row2 = mysqli_fetch_array($result2)) { 
-    $i=0;
-    do{
-        $idt[$i]=$row2["tipoServicios_idtipoServicio"];
-        $num[$i]=$row2["num"];
-        $nombre[$i]=$row2["nombre"];
-        $i++;
-    } while ($row2 = mysqli_fetch_array($result2));
-}
-
-$sql3 = "SELECT count(idestudiosxServicio) as numest
-FROM servicios s,estudiosxservicio es, tiposervicios ts
-where s.idservicio=es.servicios_idservicio and s.tipoServicios_idtipoServicio=ts.idtipoServicio and fecha between '$fechaI' and '$fechaT'
-group by s.tipoServicios_idtipoServicio
-order by s.tipoServicios_idtipoServicio;";
-$result3 = mysqli_query($db, $sql3);
-if ($row3 = mysqli_fetch_array($result3)) { 
-    $i=0;
-    do{        
-        $numest[$i]=$row3["numest"];        
-        $i++;
-    } while ($row3 = mysqli_fetch_array($result3));
-}
-$pdf->Ln(5);
-$pdf->ColorRow();
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(30);
-$pdf->Cell(15, 5, "ID", 1, 0, 'C',1);
-$pdf->Cell(80, 5, "Tipo de Servicio", 1, 0, 'C',1);
-$pdf->Cell(60, 5, "Numero de Servicios", 1, 0, 'C',1);
-$pdf->Cell(60, 5, "Numero de Estudios", 1, 1, 'C',1);
-
-$pdf->ColorRest();
-$fill=false;
-for($j=0;$j<$i;$j++){    
-    $pdf->Cell(30);
-    $pdf->Cell(15, 5, $idt[$j], 1, 0, 'L',$fill);
-    $pdf->Cell(80, 5, $nombre[$j], 1, 0, 'L',$fill);
-    $pdf->Cell(60, 5, $num[$j], 1, 0, 'C',$fill);
-    $pdf->Cell(60, 5, $numest[$j], 1, 1, 'C',$fill);
-    $fill=!$fill;
-}
 //$pdf->Output('../sicaa2/documentos/pdfRecibos/prueba2.pdf', 'F');
 $pdf->Output();
