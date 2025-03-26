@@ -2,6 +2,7 @@
 include 'conectarsislab.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["idpaciente"];
     $nombre = $_POST["nombre"];
     $apellidos = $_POST["apellidos"];
     $edad = $_POST["edad"];
@@ -9,11 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $tel = $_POST["tel"];
 
-    $sql = "INSERT INTO pacientes (idpaciente,nombre, apellidos, edad, sexo, email, tel) VALUES (null,'$nombre', '$apellidos', $edad, '$sexo', '$email', '$tel')";
+    $sql = "UPDATE pacientes SET nombre='$nombre', apellidos='$apellidos', edad=$edad, sexo='$sexo', email='$email', tel='$tel' WHERE idpaciente=$id";
     if ($db->query($sql) === TRUE) {
-        echo "Paciente agregado correctamente";
+        echo "Paciente actualizado correctamente";
     } else {
-        echo "Error: " . $conn->error;
+        echo "Error: " . $db->error;
     }
     $db->close();
 }

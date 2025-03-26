@@ -43,7 +43,7 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <span class="navbar-brand mb-0 h1">
-                    <h1>Paciente</h1>
+                    <h1>Pacientes</h1>
                 </span>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="container-fluid">
@@ -58,44 +58,34 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
             <section class="page-section" id="contact">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Ingresa los datos correctamente, para busqueda o alta</h2>
+                        <h2 class="mt-0">Listado de Pacientes</h2>
                         <hr class="divider" />
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Nuevo</button>
-
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Apellidos</th>
-                                    <th>Edad</th>
-                                    <th>Sexo</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaPacientes">
-                                <?php
-                                $sql = "SELECT * FROM pacientes";
-                                $result = $db->query($sql);
-                                while ($row = $result->fetch_assoc()) {
-                                    $nom = mb_convert_variables("UTF-8", "ISO-8859-1", $row['nombre']);
-                                    $ape = mb_convert_variables("UTF-8", "ISO-8859-1", $row['apellidos']);
-                                    echo "<tr>
-                        <td>{$row['idpaciente']}</td>
-                        <td>{$nom}</td>
-                        <td>{$ape}</td>
-                        <td>{$row['edad']}</td>
-                        <td>{$row['sexo']}</td>
-                    </tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-
+                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo Paciente</button>
                     </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Edad</th>
+                                <th>Sexo</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaPacientes">
+                            <?php
+                            include("listar.php");
+                            ?>
+                        </tbody>
+                    </table>
+
+
                 </div>
             </section>
             <!-- Footer-->
@@ -128,8 +118,46 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
                             <option value="H">Hombre</option>
                             <option value="M">Mujer</option>
                         </select>
+                        <label>Email:</label>
+                        <input type="email" name="email" class="form-control" required>
+                        <label>Teléfono:</label>
+                        <input type="text" name="tel" class="form-control" required>
                         <br>
                         <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar -->
+    <div class="modal fade" id="modalEditar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditar">
+                        <input type="hidden" name="idpaciente">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" class="form-control" required>
+                        <label>Apellidos:</label>
+                        <input type="text" name="apellidos" class="form-control" required>
+                        <label>Edad:</label>
+                        <input type="number" name="edad" class="form-control" required>
+                        <label>Sexo:</label>
+                        <select name="sexo" class="form-control">
+                            <option value="H">Hombre</option>
+                            <option value="M">Mujer</option>
+                        </select>
+                        <label>Email:</label>
+                        <input type="email" name="email" class="form-control" required>
+                        <label>Teléfono:</label>
+                        <input type="text" name="tel" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
                     </form>
                 </div>
             </div>
@@ -142,9 +170,31 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
             modal.show();
         }
 
+        function mostrarModalEditar(id) {
+            $.ajax({
+                url: "obtenerPac.php",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    var datos = JSON.parse(response);
+                    $("#modalEditar [name='idpaciente']").val(datos.idpaciente);
+                    $("#modalEditar [name='nombre']").val(datos.nombre);
+                    $("#modalEditar [name='apellidos']").val(datos.apellidos);
+                    $("#modalEditar [name='edad']").val(datos.edad);
+                    $("#modalEditar [name='sexo']").val(datos.sexo);
+                    $("#modalEditar [name='email']").val(datos.email);
+                    $("#modalEditar [name='tel']").val(datos.tel);
+
+                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+                    modal.show();
+                }
+            });
+        }
+
         $("#formNuevo").submit(function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
-
             $.ajax({
                 url: "guardar.php",
                 type: "POST",
@@ -156,6 +206,36 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
                 }
             });
         });
+
+        $("#formEditar").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "actualizarPac.php",
+                type: "POST",
+                data: $("#formEditar").serialize(),
+                success: function(response) {
+                    alert(response);
+                    $("#modalEditar").modal('hide');
+                    actualizarTabla();
+                }
+            });
+        });
+
+        function eliminarPaciente(id) {
+            if (confirm("¿Estás seguro de eliminar este paciente?")) {
+                $.ajax({
+                    url: "eliminarPac.php",
+                    type: "POST",
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        alert(response);
+                        actualizarTabla();
+                    }
+                });
+            }
+        }
 
         function actualizarTabla() {
             $.ajax({

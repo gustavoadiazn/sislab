@@ -30,7 +30,7 @@ if ($busqueda <> '') {
         if ($row = $result->fetch_array()) {
             do {
                 $idpaciente = $row['idpaciente'];
-                $nom = utf8_encode($row['apellidos'] . " " . $row['nombre'] . " " . $row['edad'] . " - " . $row['sexo']);
+                $nom = $row['apellidos'] . " " . $row['nombre'] . " " . $row['edad'] . " - " . $row['sexo'];
                 if ($i == 0) {
                     print "<option value='" . $idpaciente . "' selected>" . $nom . "</option>";
                     $i++;

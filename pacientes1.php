@@ -110,7 +110,7 @@
                             <hr class="divider" />
                             <br>
                             <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Nuevo servicio</button></div>
+                            <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Nuevo Paciente</button></div>
                             <input type="hidden" value="<?php echo $idp; ?>" name="idp" />
                         </form>
                     </div>
@@ -125,8 +125,8 @@
         $resultp = $db->query($sqlp);
 
         if ($rowp = $resultp->fetch_array()) {
-            $nomp = utf8_encode($rowp['nombre']);
-            $apel = utf8_encode($rowp['apellidos']);
+            $nomp = $rowp['nombre'];
+            $apel = $rowp['apellidos'];
             $edad = $rowp['edad'];
             $sexo = $rowp['sexo'];
             $email = $rowp['email'];
@@ -216,8 +216,8 @@
                                         $ids = $row["idservicio"];
                                         echo "<tr style='font-size: small;'>";
                                         echo "<td>{$row['impresionClinica']}</td>";
-                                        echo "<td>" . utf8_encode($row['nommed']) . "</td>";
-                                        echo "<td>" . utf8_encode($row['nomqfb']) . "</td>";
+                                        echo "<td>" . $row['nommed'] . "</td>";
+                                        echo "<td>" . $row['nomqfb'] . "</td>";
                                         echo "<td>{$row['nomtur']}</td>";
                                         echo "<td>{$row['embarazada']}</td>";
                                         echo "<td>{$row['fecha']}</td>";

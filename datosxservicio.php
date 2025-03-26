@@ -86,8 +86,8 @@
     $resultp = $db->query($sqlp);
 
     if ($rowp = $resultp->fetch_array()) {
-        $nomp = utf8_encode($rowp['nombre']);
-        $apel = utf8_encode($rowp['apellidos']);
+        $nomp = $rowp['nombre'];
+        $apel = $rowp['apellidos'];
         $sexo = $rowp['sexo'];
     }
     ?>
@@ -162,7 +162,7 @@
                                     $i = 0;
                                     do {
                                         $idest = $rowest['idestudio'];
-                                        $nomest = utf8_encode($rowest['nombre']);
+                                        $nomest = $rowest['nombre'];
                                 ?>
                                         <div class="tab-pane fade <?php if ($i == 0) {
                                                                         $i++; ?>show active<?php } ?>" id="Est<?php echo $idest; ?>" role="tabpanel" aria-labelledby="Est<?php echo $idest; ?>-tab">
@@ -193,7 +193,7 @@
                                             if ($rowdat = $resultdat->fetch_array()) {
                                                 do {
                                                     $iddat = $rowdat['iddato'];
-                                                    $nomdat = utf8_encode($rowdat['nombre']);
+                                                    $nomdat = $rowdat['nombre'];
                                                     $inddat = $rowdat['indicadores'];
                                                     $desdat = $rowdat['desc'];
                                                     $datdat = $rowdat['dato'];
