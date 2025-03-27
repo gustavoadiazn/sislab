@@ -1,9 +1,9 @@
 <?php
-include 'conectarsislab.php';
+include '../conectarsislab.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $id = $_POST["id"];
-    $sql = "SELECT * FROM tipoServicios WHERE idtipoServicio = $id";
+    $sql = "SELECT * FROM qfbs WHERE idqfb = $id";
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
         echo json_encode($result->fetch_assoc());

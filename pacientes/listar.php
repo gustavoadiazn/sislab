@@ -1,5 +1,5 @@
 <?php
-include 'conectarsislab.php';
+include '../conectarsislab.php';
 
 $sql = "SELECT * FROM pacientes";
 $result = $db->query($sql);

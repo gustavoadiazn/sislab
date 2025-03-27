@@ -1,5 +1,5 @@
 <?php
-include 'conectarsislab.php'; // Archivo de conexión a la base de datos
+include '../conectarsislab.php'; // Archivo de conexión a la base de datos
 //ini_set("default_charset", "UTF-8");
 //mb_internal_encoding("UTF-8");
 ?>
@@ -22,7 +22,7 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
     <!-- SimpleLightbox plugin CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="styles/styles2.css" rel="stylesheet" />
+    <link href="../styles/styles2.css" rel="stylesheet" />
 
     <style>
         /* Add CSS rules for the square border */
@@ -47,8 +47,8 @@ include 'conectarsislab.php'; // Archivo de conexión a la base de datos
                 </span>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="container-fluid">
-                        <a href="home.php" class="btn btn-info"> Menú </a>
-                        <a href="logout.php" class="btn btn-light"> Salir </a>
+                        <a href="../home.php" class="btn btn-info"> Menú </a>
+                        <a href="../logout.php" class="btn btn-light"> Salir </a>
                     </div>
                 </div>
             </nav>
