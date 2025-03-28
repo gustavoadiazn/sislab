@@ -11,7 +11,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Buscar Tipo Servicios</title>
+    <title>Buscar Turnos</title>
 
 
     <!-- Bootstrap Icons-->
@@ -43,7 +43,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <span class="navbar-brand mb-0 h1">
-                    <h1>QFBs</h1>
+                    <h1>Turnos</h1>
                 </span>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="container-fluid">
@@ -58,28 +58,49 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             <section class="page-section" id="contact">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Listado de QFBs</h2>
+                        <h2 class="mt-0">Listado de Turnos</h2>
                         <hr class="divider" />
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo QFB</button>
+                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo Turno</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Costo</th>
                                 <th>Descripción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaQFB">
-                            <?php
-                            include("listarqfb.php");
-                            ?>
+                        <tbody id="tablaEstudios">
+                            <!-- Datos cargados con AJAX -->
                         </tbody>
                     </table>
+
+                    <button class="btn btn-primary" onclick="ModalNuevoEstudio()">Nuevo Estudio</button>
+
+                    <h3>Datos del Estudio Seleccionado</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID Dato</th>
+                                <th>Nombre</th>
+                                <th>Indicadores</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDatos">
+                            <!-- Se llenará con AJAX al seleccionar un estudio -->
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success" onclick="ModalNuevoDato()" style="display: none;" id="btnNuevoDato">Nuevo Dato</button>
+
 
 
                 </div>
@@ -93,126 +114,76 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalNuevo" tabindex="-1">
+    <!-- Modal Nuevo Estudio -->
+    <div class="modal fade" id="modalNuevoEstudio">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Agregar QFBs</h5>
+                    <h5 class="modal-title">Nuevo Estudio</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formNuevo">
+                    <form id="formNuevoEstudio">
                         <label>Nombre:</label>
                         <input type="text" name="nombre" class="form-control" required>
+                        <label>Costo:</label>
+                        <input type="number" name="costo" class="form-control" required>
                         <label>Descripción:</label>
-                        <input type="text" name="descrip" class="form-control" required>
+                        <textarea name="descrip" class="form-control" required></textarea>
                         <br>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Editar -->
-    <div class="modal fade" id="modalEditar" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Actualizar QFBs</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEditar">
-                        <input type="hidden" name="idqfb">
-                        <label>Nombre:</label>
-                        <input type="text" name="nombre" class="form-control" required>
-                        <label>Descripción:</label>
-                        <input type="text" name="descrip" class="form-control" required>
-                        <br>
-                        <button type="submit" class="btn btn-warning">Actualizar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 
     <script>
-        function mostrarModal() {
-            var modal = new bootstrap.Modal(document.getElementById('modalNuevo'));
-            modal.show();
-        }
-
-        function mostrarModalEditar(id) {
-            $.ajax({
-                url: "obtenerqfb.php",
-                type: "POST",
-                data: {
-                    id: id
-                },
-                success: function(response) {
-                    var datos = JSON.parse(response);
-                    $("#modalEditar [name='idqfb']").val(datos.idqfb);
-                    $("#modalEditar [name='nombre']").val(datos.nombre);
-                    $("#modalEditar [name='descrip']").val(datos.descrip);
-
-                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
-                    modal.show();
-                }
-            });
-        }
-
-        $("#formNuevo").submit(function(event) {
-            event.preventDefault(); // Evita el envío tradicional del formulario
-            $.ajax({
-                url: "guardarqfb.php",
-                type: "POST",
-                data: $("#formNuevo").serialize(),
-                success: function(response) {
-                    alert(response);
-                    $("#modalNuevo").modal('hide'); // Cierra el modal
-                    actualizarTabla(); // Recarga la tabla con AJAX
-                }
-            });
-        });
-
-        $("#formEditar").submit(function(event) {
+        $("#formNuevoEstudio").submit(function(event) {
             event.preventDefault();
             $.ajax({
-                url: "actualizarqfb.php",
+                url: "crear_estudio.php",
                 type: "POST",
-                data: $("#formEditar").serialize(),
+                data: $("#formNuevoEstudio").serialize(),
                 success: function(response) {
                     alert(response);
-                    $("#modalEditar").modal('hide');
-                    actualizarTabla();
+                    $("#modalNuevoEstudio").modal('hide');
+                    cargarEstudios();
                 }
             });
         });
 
-        function eliminarts(id) {
-            if (confirm("¿Estás seguro de eliminar este paciente?")) {
-                $.ajax({
-                    url: "eliminarqfb.php",
-                    type: "POST",
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        alert(response);
-                        actualizarTabla();
-                    }
-                });
-            }
-        }
 
-        function actualizarTabla() {
+        $(document).ready(function() {
+            cargarEstudios();
+        });
+
+        // Cargar Estudios
+        function cargarEstudios() {
             $.ajax({
-                url: "listarqfb.php",
+                url: "listar_estudios.php",
                 type: "GET",
                 success: function(data) {
-                    $("#tablaQFB").html(data);
+                    $("#tablaEstudios").html(data);
+                }
+            });
+        }
+
+        // Cargar Datos por Estudio
+        function cargarDatos(idestudio) {
+            $.ajax({
+                url: "listar_datos.php",
+                type: "GET",
+                data: {
+                    idestudio: idestudio
+                },
+                success: function(data) {
+                    $("#tablaDatos").html(data);
+                    $("#btnNuevoDato").show();
+                    $("#btnNuevoDato").attr("onclick", `mostrarModalNuevoDato(${idestudio})`);
                 }
             });
         }

@@ -11,7 +11,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Buscar Tipo Servicios</title>
+    <title>Buscar Turnos</title>
 
 
     <!-- Bootstrap Icons-->
@@ -43,7 +43,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <span class="navbar-brand mb-0 h1">
-                    <h1>QFBs</h1>
+                    <h1>Turnos</h1>
                 </span>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="container-fluid">
@@ -58,13 +58,13 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             <section class="page-section" id="contact">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Listado de QFBs</h2>
+                        <h2 class="mt-0">Listado de Turnos</h2>
                         <hr class="divider" />
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo QFB</button>
+                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo Turno</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>
@@ -74,9 +74,9 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                                 <th>Descripción</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaQFB">
+                        <tbody id="tablaTUR">
                             <?php
-                            include("listarqfb.php");
+                            include("listartur.php");
                             ?>
                         </tbody>
                     </table>
@@ -98,7 +98,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Agregar QFBs</h5>
+                    <h5 class="modal-title">Agregar Turnos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -120,12 +120,12 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Actualizar QFBs</h5>
+                    <h5 class="modal-title">Actualizar Turnos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formEditar">
-                        <input type="hidden" name="idqfb">
+                        <input type="hidden" name="idturno">
                         <label>Nombre:</label>
                         <input type="text" name="nombre" class="form-control" required>
                         <label>Descripción:</label>
@@ -146,14 +146,14 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
 
         function mostrarModalEditar(id) {
             $.ajax({
-                url: "obtenerqfb.php",
+                url: "obtenertur.php",
                 type: "POST",
                 data: {
                     id: id
                 },
                 success: function(response) {
                     var datos = JSON.parse(response);
-                    $("#modalEditar [name='idqfb']").val(datos.idqfb);
+                    $("#modalEditar [name='idturno']").val(datos.idturno);
                     $("#modalEditar [name='nombre']").val(datos.nombre);
                     $("#modalEditar [name='descrip']").val(datos.descrip);
 
@@ -166,7 +166,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         $("#formNuevo").submit(function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
             $.ajax({
-                url: "guardarqfb.php",
+                url: "guardartur.php",
                 type: "POST",
                 data: $("#formNuevo").serialize(),
                 success: function(response) {
@@ -180,7 +180,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         $("#formEditar").submit(function(event) {
             event.preventDefault();
             $.ajax({
-                url: "actualizarqfb.php",
+                url: "actualizartur.php",
                 type: "POST",
                 data: $("#formEditar").serialize(),
                 success: function(response) {
@@ -194,7 +194,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         function eliminarts(id) {
             if (confirm("¿Estás seguro de eliminar este paciente?")) {
                 $.ajax({
-                    url: "eliminarqfb.php",
+                    url: "eliminartur.php",
                     type: "POST",
                     data: {
                         id: id
@@ -209,10 +209,10 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
 
         function actualizarTabla() {
             $.ajax({
-                url: "listarqfb.php",
+                url: "listartur.php",
                 type: "GET",
                 success: function(data) {
-                    $("#tablaQFB").html(data);
+                    $("#tablaTUR").html(data);
                 }
             });
         }
