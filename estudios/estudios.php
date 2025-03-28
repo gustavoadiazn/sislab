@@ -11,7 +11,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Buscar Turnos</title>
+    <title>Buscar Estudios con Datos</title>
 
 
     <!-- Bootstrap Icons-->
@@ -43,7 +43,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <span class="navbar-brand mb-0 h1">
-                    <h1>Turnos</h1>
+                    <h1>Estudios</h1>
                 </span>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="container-fluid">
@@ -58,50 +58,35 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             <section class="page-section" id="contact">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Listado de Turnos</h2>
+                        <h2 class="mt-0">Listado de Estudios</h2>
                         <hr class="divider" />
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <label for="selectEstudio">Estudios:</label>
+                    <select id="selectEstudio" class="form-control" onchange="cargarDatos(this.value)">
+                        <option value="">Seleccione un estudio</option>
+                    </select>
                     <div class="col-lg-6">
-                        <button class="btn btn-primary mb-3" onclick="mostrarModal()">Ingresar Nuevo Turno</button>
+                        <button class="btn btn-primary" onclick="mostrarModal()">Ingresar Nuevo Estudio</button>
+                        <!-- Botón para actualizar el estudio seleccionado -->
+                        <button id="btnActualizarEstudio" class="btn btn-warning mt-2" onclick="mostrarModalActualizarEstudio()" disabled>Actualizar Estudio</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Costo</th>
-                                <th>Descripción</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaEstudios">
-                            <!-- Datos cargados con AJAX -->
-                        </tbody>
-                    </table>
-
-                    <button class="btn btn-primary" onclick="ModalNuevoEstudio()">Nuevo Estudio</button>
-
-                    <h3>Datos del Estudio Seleccionado</h3>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID Dato</th>
-                                <th>Nombre</th>
                                 <th>Indicadores</th>
                                 <th>Descripción</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaDatos">
-                            <!-- Se llenará con AJAX al seleccionar un estudio -->
-                        </tbody>
+                        <tbody id="tablaDatos"></tbody>
                     </table>
 
-                    <button class="btn btn-success" onclick="ModalNuevoDato()" style="display: none;" id="btnNuevoDato">Nuevo Dato</button>
-
-
+                    <!-- Botón para agregar un nuevo dato -->
+                    <button class="btn btn-primary" onclick="mostrarModalNuevoDato()">Nuevo Dato</button>
 
                 </div>
             </section>
@@ -138,54 +123,242 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         </div>
     </div>
 
+    <!-- Modal Actualizar Estudio -->
+    <div class="modal fade" id="modalActualizarEstudio">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Estudio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formActualizarEstudio">
+                        <input type="hidden" name="idestudio" id="idestudioActualizar">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" id="nombreActualizar" class="form-control" required>
+                        <label>Costo:</label>
+                        <input type="number" name="costo" id="costoActualizar" class="form-control" required>
+                        <label>Descripción:</label>
+                        <textarea name="descrip" id="descripActualizar" class="form-control" required></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Nuevo Dato -->
+    <div class="modal fade" id="modalNuevoDato">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo Dato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNuevoDato">
+                        <input type="hidden" id="idestudio" name="idestudio">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" class="form-control" required>
+                        <label>Indicadores:</label>
+                        <input type="text" name="indicadores" class="form-control" required>
+                        <label>Descripción:</label>
+                        <textarea name="descrip" class="form-control" required></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Actualizar Dato -->
+    <div class="modal fade" id="modalActualizarDato">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Dato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formActualizarDato">
+                        <input type="hidden" name="iddato" id="iddatoActualizar">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" id="nombreActualizar" class="form-control" required>
+                        <label>Indicadores:</label>
+                        <input type="text" name="indicadores" id="indicadoresActualizar" class="form-control" required>
+                        <label>Descripción:</label>
+                        <textarea name="descrip" id="descripActualizar" class="form-control" required></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
     <script>
+        function mostrarModal() {
+            var modal = new bootstrap.Modal(document.getElementById('modalNuevoEstudio'));
+            modal.show();
+        }
+
         $("#formNuevoEstudio").submit(function(event) {
             event.preventDefault();
+
             $.ajax({
                 url: "crear_estudio.php",
                 type: "POST",
                 data: $("#formNuevoEstudio").serialize(),
                 success: function(response) {
                     alert(response);
-                    $("#modalNuevoEstudio").modal('hide');
-                    cargarEstudios();
+                    $("#modalNuevoEstudio").modal('hide'); // Cerrar modal
+
+                    // Recargar dropdown y seleccionar el nuevo estudio
+                    cargarEstudios(() => {
+                        let nuevoIdEstudio = $("#ultimoIdEstudio").val();
+                        $("#selectEstudio").val(nuevoIdEstudio).change(); // Seleccionar nuevo
+                    });
                 }
             });
         });
-
 
         $(document).ready(function() {
             cargarEstudios();
         });
 
-        // Cargar Estudios
-        function cargarEstudios() {
+        // Cargar Estudios en el Dropdown     
+        function cargarEstudios(callback) {
             $.ajax({
-                url: "listar_estudios.php",
+                url: "listar_estudios_dropdown.php",
                 type: "GET",
                 success: function(data) {
-                    $("#tablaEstudios").html(data);
+                    $("#selectEstudio").html('<option value="">Seleccione un estudio</option>' + data);
+                    if (callback) callback(); // Ejecutar callback después de cargar
                 }
             });
         }
 
-        // Cargar Datos por Estudio
+        // Cuando se selecciona un estudio, actualizar el botón
         function cargarDatos(idestudio) {
+            if (idestudio) {
+                $("#btnActualizarEstudio").prop("disabled", false); // Habilitar el botón
+                $("#btnActualizarEstudio").attr("onclick", `mostrarModalActualizarEstudio(${idestudio})`);
+
+                $.ajax({
+                    url: "listar_datos.php",
+                    type: "GET",
+                    data: {
+                        idestudio: idestudio
+                    },
+                    success: function(data) {
+                        $("#tablaDatos").html(data);
+                        $("#btnNuevoDato").show();
+                        $("#btnNuevoDato").attr("onclick", `mostrarModalNuevoDato(${idestudio})`);
+                    }
+                });
+            } else {
+                $("#btnActualizarEstudio").prop("disabled", true); // Deshabilitar el botón
+                $("#tablaDatos").html("");
+                $("#btnNuevoDato").hide();
+            }
+        }
+
+        function mostrarModalActualizarEstudio(idestudio) {
             $.ajax({
-                url: "listar_datos.php",
+                url: "obtenerest.php",
                 type: "GET",
                 data: {
                     idestudio: idestudio
                 },
                 success: function(data) {
-                    $("#tablaDatos").html(data);
-                    $("#btnNuevoDato").show();
-                    $("#btnNuevoDato").attr("onclick", `mostrarModalNuevoDato(${idestudio})`);
+                    var estudio = JSON.parse(data);
+                    $("#idestudioActualizar").val(estudio.idestudio);
+                    $("#nombreActualizar").val(estudio.nombre);
+                    $("#costoActualizar").val(estudio.costo);
+                    $("#descripActualizar").val(estudio.descrip);
+                    $("#modalActualizarEstudio").modal('show');
                 }
             });
+        }
+
+        $("#formActualizarEstudio").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "actualizar_estudio.php",
+                type: "POST",
+                data: $("#formActualizarEstudio").serialize(),
+                success: function(response) {
+                    alert(response);
+                    $("#modalActualizarEstudio").modal('hide');
+                    cargarEstudios();
+                }
+            });
+        });
+
+        function mostrarModalActualizarDato(iddato) {
+            $.ajax({
+                url: "obtener_dato.php",
+                type: "GET",
+                data: {
+                    iddato: iddato
+                },
+                success: function(data) {
+                    var dato = JSON.parse(data);
+                    $("#iddatoActualizar").val(dato.iddato);
+                    $("#nombreActualizar").val(dato.nombre);
+                    $("#indicadoresActualizar").val(dato.indicadores);
+                    $("#descripActualizar").val(dato.descrip);
+                    $("#modalActualizarDato").modal('show');
+                }
+            });
+        }
+
+        $("#formNuevoDato").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "agregar_dato.php",
+                type: "POST",
+                data: $("#formNuevoDato").serialize(),
+                success: function(response) {
+                    alert(response);
+                    $("#modalNuevoDato").modal('hide');
+                    cargarDatos($("#idestudio").val());
+                }
+            });
+        });
+
+        $("#formActualizarDato").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "actualizar_dato.php",
+                type: "POST",
+                data: $("#formActualizarDato").serialize(),
+                success: function(response) {
+                    alert(response);
+                    $("#modalActualizarDato").modal('hide');
+                    cargarDatos($("#idestudio").val());
+                }
+            });
+        });
+
+        function eliminarDato(iddato) {
+            if (confirm("¿Seguro que quieres eliminar este dato?")) {
+                $.ajax({
+                    url: "eliminar_dato.php",
+                    type: "POST",
+                    data: {
+                        iddato: iddato
+                    },
+                    success: function(response) {
+                        alert(response);
+                        cargarDatos($("#idestudio").val());
+                    }
+                });
+            }
         }
     </script>
 
