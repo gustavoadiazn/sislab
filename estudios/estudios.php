@@ -70,7 +70,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                     <div class="col-lg-6">
                         <button class="btn btn-primary" onclick="mostrarModal()">Ingresar Nuevo Estudio</button>
                         <!-- Botón para actualizar el estudio seleccionado -->
-                        <button id="btnActualizarEstudio" class="btn btn-warning mt-2" onclick="mostrarModalActualizarEstudio()" disabled>Actualizar Estudio</button>
+                        <button id="btnActualizarEstudio" class="btn btn-warning" onclick="mostrarModalActualizarEstudio()" disabled>Actualizar Estudio</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>
@@ -185,11 +185,11 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                     <form id="formActualizarDato">
                         <input type="hidden" name="iddato" id="iddatoActualizar">
                         <label>Nombre:</label>
-                        <input type="text" name="nombre" id="nombreActualizar" class="form-control" required>
+                        <input type="text" name="nombre" id="nombreActualizarDato" class="form-control" required>
                         <label>Indicadores:</label>
                         <input type="text" name="indicadores" id="indicadoresActualizar" class="form-control" required>
                         <label>Descripción:</label>
-                        <textarea name="descrip" id="descripActualizar" class="form-control" required></textarea>
+                        <textarea name="descrip" id="descripActualizarDato" class="form-control" required></textarea>
                         <br>
                         <button type="submit" class="btn btn-success">Actualizar</button>
                     </form>
@@ -203,6 +203,11 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
     <script>
         function mostrarModal() {
             var modal = new bootstrap.Modal(document.getElementById('modalNuevoEstudio'));
+            modal.show();
+        }
+
+        function mostrarModalNuevoDato() {
+            var modal = new bootstrap.Modal(document.getElementById('modalNuevoDato'));
             modal.show();
         }
 
@@ -309,9 +314,9 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                 success: function(data) {
                     var dato = JSON.parse(data);
                     $("#iddatoActualizar").val(dato.iddato);
-                    $("#nombreActualizar").val(dato.nombre);
+                    $("#nombreActualizarDato").val(dato.nombre);
                     $("#indicadoresActualizar").val(dato.indicadores);
-                    $("#descripActualizar").val(dato.descrip);
+                    $("#descripActualizarDato").val(dato.descrip);
                     $("#modalActualizarDato").modal('show');
                 }
             });
@@ -322,7 +327,9 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             $.ajax({
                 url: "agregar_dato.php",
                 type: "POST",
-                data: $("#formNuevoDato").serialize(),
+                data: ($("#formNuevoDato").serialize(), {
+                    idestudio: $("#idestudio").val()
+                }),
                 success: function(response) {
                     alert(response);
                     $("#modalNuevoDato").modal('hide');
