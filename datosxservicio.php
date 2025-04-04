@@ -195,7 +195,7 @@
                                                     $iddat = $rowdat['iddato'];
                                                     $nomdat = $rowdat['nombre'];
                                                     $inddat = $rowdat['indicadores'];
-                                                    $desdat = $rowdat['desc'];
+                                                    $desdat = $rowdat['descrip'];
                                                     $datdat = $rowdat['dato'];
                                                     $obsdat = $rowdat['observaciones'];
                                             ?>

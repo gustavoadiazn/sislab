@@ -148,7 +148,6 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         </div>
     </div>
 
-    <!-- Modal para Nuevo Dato -->
     <div class="modal fade" id="modalNuevoDato">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -158,13 +157,18 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                 </div>
                 <div class="modal-body">
                     <form id="formNuevoDato">
+                        <!-- Campo oculto donde se guardará el ID del estudio seleccionado -->
                         <input type="hidden" id="idestudio" name="idestudio">
+
                         <label>Nombre:</label>
                         <input type="text" name="nombre" class="form-control" required>
+
                         <label>Indicadores:</label>
                         <input type="text" name="indicadores" class="form-control" required>
+
                         <label>Descripción:</label>
                         <textarea name="descrip" class="form-control" required></textarea>
+
                         <br>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
@@ -172,6 +176,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             </div>
         </div>
     </div>
+
 
     <!-- Modal para Actualizar Dato -->
     <div class="modal fade" id="modalActualizarDato">
@@ -207,9 +212,17 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         }
 
         function mostrarModalNuevoDato() {
-            var modal = new bootstrap.Modal(document.getElementById('modalNuevoDato'));
-            modal.show();
+            let idEstudio = $("#selectEstudio").val(); // Obtener el ID seleccionado
+
+            if (!idEstudio) {
+                alert("Por favor, seleccione un estudio primero.");
+                return;
+            }
+
+            $("#idestudio").val(idEstudio); // Asignar el ID en el campo oculto
+            $("#modalNuevoDato").modal("show"); // Mostrar el modal
         }
+
 
         $("#formNuevoEstudio").submit(function(event) {
             event.preventDefault();
@@ -272,6 +285,19 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             }
         }
 
+        function cargarDatos2(idestudio) {
+            $.ajax({
+                url: "listar_datos.php",
+                type: "GET",
+                data: {
+                    idestudio: idestudio
+                },
+                success: function(data) {
+                    $("#tablaDatos").html(data);
+                }
+            });
+        }
+
         function mostrarModalActualizarEstudio(idestudio) {
             $.ajax({
                 url: "obtenerest.php",
@@ -323,20 +349,20 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
         }
 
         $("#formNuevoDato").submit(function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Evita el recargo de la página
+
             $.ajax({
                 url: "agregar_dato.php",
                 type: "POST",
-                data: ($("#formNuevoDato").serialize(), {
-                    idestudio: $("#idestudio").val()
-                }),
+                data: $("#formNuevoDato").serialize(),
                 success: function(response) {
                     alert(response);
-                    $("#modalNuevoDato").modal('hide');
-                    cargarDatos($("#idestudio").val());
+                    $("#modalNuevoDato").modal("hide"); // Cerrar modal
+                    cargarDatos2($("#selectEstudio").val()); // Recargar tabla de datos
                 }
             });
         });
+
 
         $("#formActualizarDato").submit(function(event) {
             event.preventDefault();
