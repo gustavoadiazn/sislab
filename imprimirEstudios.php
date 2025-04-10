@@ -82,7 +82,7 @@ while ($row = mysqli_fetch_array($result)) {
         $pdf->Cell(25, 5, "Dato", 1, 0, 'C', 1);
         $pdf->Cell(50, 5, "Observaciones", 1, 0, 'C', 1);
         $pdf->Cell(20, 5, "Indicadores", 1, 0, 'C', 1);
-        $pdf->Cell(40, 5, utf8_decode("Descipción"), 1, 1, 'C', 1);
+        $pdf->Cell(40, 5, utf8_decode("Descripción"), 1, 1, 'C', 1);
         $pdf->ColorRest();
         $fill = false;
         do {
