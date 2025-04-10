@@ -140,8 +140,8 @@
     $resultp = $db->query($sqlp);
 
     if ($rowp = $resultp->fetch_array()) {
-        $nomp = utf8_encode($rowp['nombre']);
-        $apel = utf8_encode($rowp['apellidos']);
+        $nomp = $rowp['nombre'];
+        $apel = $rowp['apellidos'];
         $sexo = $rowp['sexo'];
     }
     ?>
