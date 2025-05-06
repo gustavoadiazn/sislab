@@ -73,6 +73,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
                                 <th>Edad</th>
+                                <th>Curp</th>
                                 <th>Sexo</th>
                                 <th>Email</th>
                                 <th>Teléfono</th>
@@ -113,6 +114,8 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <input type="text" name="apellidos" class="form-control" required>
                         <label>Edad:</label>
                         <input type="number" name="edad" class="form-control" required>
+                        <label>CURP:</label>
+                        <input type="text" name="curp" class="form-control" required>
                         <label>Sexo:</label>
                         <select name="sexo" class="form-control">
                             <option value="H">Hombre</option>
@@ -147,6 +150,8 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <input type="text" name="apellidos" class="form-control" required>
                         <label>Edad:</label>
                         <input type="number" name="edad" class="form-control" required>
+                        <label>CURP:</label>
+                        <input type="text" name="curp" class="form-control" required>
                         <label>Sexo:</label>
                         <select name="sexo" class="form-control">
                             <option value="H">Hombre</option>
@@ -183,6 +188,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                     $("#modalEditar [name='nombre']").val(datos.nombre);
                     $("#modalEditar [name='apellidos']").val(datos.apellidos);
                     $("#modalEditar [name='edad']").val(datos.edad);
+                    $("#modalEditar [name='curp']").val(datos.curp);
                     $("#modalEditar [name='sexo']").val(datos.sexo);
                     $("#modalEditar [name='email']").val(datos.email);
                     $("#modalEditar [name='tel']").val(datos.tel);

@@ -11,6 +11,7 @@ while ($row = $result->fetch_assoc()) {
                 <td>{$row['nombre']}</td>
                 <td>{$row['apellidos']}</td>
                 <td>{$row['edad']}</td>
+                <td>{$row['curp']}</td>
                 <td>{$row['sexo']}</td>
                 <td>{$row['email']}</td>
                 <td>{$row['tel']}</td>

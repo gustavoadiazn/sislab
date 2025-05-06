@@ -89,6 +89,7 @@
         $nomp = $rowp['nombre'];
         $apel = $rowp['apellidos'];
         $sexo = $rowp['sexo'];
+        $curp = $rowp['curp'];
     }
     ?>
     <!-- Contact-->
@@ -96,7 +97,7 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6 text-center">
-                    <h2 class="mt-0">Datos del Paciente</h2>
+                    <h2 class="mt-0">Datos del Paciente: <?php echo $curp; ?></h2>
                 </div>
             </div>
             <div class="row gx-4 gx-lg-5 justify-content-center mb-5">

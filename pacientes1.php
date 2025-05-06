@@ -87,6 +87,10 @@
                                 <input class="form-control" id="edad" name="edad" type="text" placeholder="Edad" required />
                                 <label for="edad">Edad</label>
                             </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="curp" name="curp" type="text" placeholder="Curp" required />
+                                <label for="curp">CURP</label>
+                            </div>
                             <!-- Turno input-->
                             <div class="form-floating mb-3">
                                 <select class="form-control" id="sexo" name="sexo">
@@ -128,6 +132,7 @@
             $nomp = $rowp['nombre'];
             $apel = $rowp['apellidos'];
             $edad = $rowp['edad'];
+            $curp = $rowp['curp'];
             $sexo = $rowp['sexo'];
             $email = $rowp['email'];
             $telp = $rowp['tel'];
@@ -168,6 +173,12 @@
                                 </div>
                                 <div class="columnCol">
                                     <div class="form-floating mb-3">
+                                        <input class="form-control" id="curp" name="curp" type="text" value="<?php echo $curp; ?>" readonly />
+                                        <label for="curp">CURP</label>
+                                    </div>
+                                </div>
+                                <div class="columnCol">
+                                    <div class="form-floating mb-3">
                                         <input class="form-control" id="sexo" name="sexo" type="text" value="<?php echo $sexo; ?>" readonly />
                                         <label for="edad">Sexo</label>
                                     </div>
@@ -195,7 +206,7 @@
                             <?php
                             $sql = "SELECT s.idservicio,m.nombre as nommed,q.nombre as nomqfb,t.nombre as nomtur, impresionClinica, embarazada,fecha
                                     FROM servicios s, medicos m, qfbs q, turnos t
-                                    where pacientes_idpaciente=1 and medicos_idmedico=m.idmedico and qfbs_idqfb=q.idqfb and turnos_idturno=t.idturno order by s.idservicio desc;";
+                                    where pacientes_idpaciente=$idp and medicos_idmedico=m.idmedico and qfbs_idqfb=q.idqfb and turnos_idturno=t.idturno order by s.idservicio desc;";
                             $result = $db->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -228,7 +239,7 @@
                                 </table>
                             <?php
                             } else {
-                                echo "No hay pacientes registrados.";
+                                echo "No hay servicios registrados.";
                             }
                             ?>
                             <input type="hidden" value="<?php echo $idp; ?>" name="idp" />
