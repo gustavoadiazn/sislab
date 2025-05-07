@@ -71,6 +71,11 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <button class="btn btn-primary" onclick="mostrarModal()">Ingresar Nuevo Estudio</button>
                         <!-- Botón para actualizar el estudio seleccionado -->
                         <button id="btnActualizarEstudio" class="btn btn-warning" onclick="mostrarModalActualizarEstudio()" disabled>Actualizar Estudio</button>
+                        <!-- Input para ingresar el número a sumar -->
+                        <input type="number" id="cantidadSumar" placeholder="Cantidad a sumar" disabled>
+
+                        <!-- Botón para realizar la suma -->
+                        <button id="btnSumar" onclick="sumarATotal()" disabled>Sumar al total del estudio</button>
                     </div>
                     <table class="table table-bordered">
                         <thead>
@@ -115,6 +120,8 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <input type="number" name="costo" class="form-control" required>
                         <label>Descripción:</label>
                         <textarea name="descrip" class="form-control" required></textarea>
+                        <label>Total de estudios por hacer:</label>
+                        <input type="number" name="total" class="form-control" required>
                         <br>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
@@ -140,6 +147,8 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <input type="number" name="costo" id="costoActualizar" class="form-control" required>
                         <label>Descripción:</label>
                         <textarea name="descrip" id="descripActualizar" class="form-control" required></textarea>
+                        <label>Total de estudios por hacer:</label>
+                        <input type="number" name="total" id="costoActualizar" class="form-control" required>
                         <br>
                         <button type="submit" class="btn btn-success">Guardar Cambios</button>
                     </form>
@@ -250,6 +259,9 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
 
         // Cargar Estudios en el Dropdown     
         function cargarEstudios(callback) {
+            $("#btnActualizarEstudio").prop("disabled", true); // Habilitar el botón                
+            $("#cantidadSumar").prop("disabled", true); // Habilitar el botón                
+            $("#btnSumar").prop("disabled", true); // Habilitar el botón                
             $.ajax({
                 url: "listar_estudios_dropdown.php",
                 type: "GET",
@@ -265,6 +277,9 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
             if (idestudio) {
                 $("#btnActualizarEstudio").prop("disabled", false); // Habilitar el botón
                 $("#btnActualizarEstudio").attr("onclick", `mostrarModalActualizarEstudio(${idestudio})`);
+                $("#cantidadSumar").prop("disabled", false); // Habilitar el botón                
+                $("#btnSumar").prop("disabled", false); // Habilitar el botón
+                $("#btnSumar").attr("onclick", `sumarATotal(${idestudio})`);
 
                 $.ajax({
                     url: "listar_datos.php",
@@ -392,6 +407,26 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                     }
                 });
             }
+        }
+
+        function sumarATotal(idestudio) {
+            let cantidad = parseFloat(document.getElementById("cantidadSumar").value);
+            if (isNaN(cantidad)) {
+                alert("Ingrese una cantidad válida.");
+                return;
+            }
+            $.ajax({
+                url: "sumar_total.php",
+                type: "POST",
+                data: {
+                    idestudio: idestudio,
+                    cantidad: cantidad
+                },
+                success: function(response) {
+                    alert(response);
+                    cargarEstudios();
+                }
+            });
         }
     </script>
 

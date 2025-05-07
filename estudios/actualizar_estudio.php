@@ -5,8 +5,9 @@ $idestudio = $_POST["idestudio"];
 $nombre = $_POST["nombre"];
 $costo = $_POST["costo"];
 $descrip = $_POST["descrip"];
+$total = $_POST["total"];
 
-$sql = "UPDATE estudios SET nombre='$nombre', costo=$costo, descrip='$descrip' WHERE idestudio=$idestudio";
+$sql = "UPDATE estudios SET nombre='$nombre', costo=$costo, descrip='$descrip', total=$total WHERE idestudio=$idestudio";
 if ($db->query($sql) === TRUE) {
     echo "Estudio actualizado exitosamente";
 } else {
