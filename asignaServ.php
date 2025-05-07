@@ -10,14 +10,18 @@ $result = $db->query($sql);
 if ($result->num_rows > 0) {
     $borrar = "delete from estudiosxservicio where servicios_idservicio='$data2' and estudios_idestudio='$data'";
     $delete = $db->query($borrar);
-    $borrar = "delete from datosxestudiosxservicio where estudiosxServicio_idestudiosxServicio in 
+    $borrar2 = "delete from datosxestudiosxservicio where estudiosxServicio_idestudiosxServicio in 
     (SELECT idestudiosxServicio FROM estudiosxservicio e where e.servicios_idservicio='$data2' and e.estudios_idestudio='$data');";
-    $delete = $db->query($borrar);
+    $delete2 = $db->query($borrar2);
+    $updservicio = "update servicios set total=total+1 where idservicio='$data2'";
+    $upd = $db->query($updservicio);
 } else {
     $insertar = "insert into estudiosxservicio(idestudiosxServicio,costo,servicios_idservicio,estudios_idestudio) values(null,$data3,$data2,$data)";
     $agregar = $db->query($insertar);
     $insertar2 = "insert into datosxestudiosxservicio SELECT iddato,idestudiosxServicio,'','' FROM estudiosxservicio e,datos d where e.servicios_idservicio='$data2' and e.estudios_idestudio='$data' and e.estudios_idestudio=d.estudios_idestudio;";
     $agregar2 = $db->query($insertar2);
+    $updservicio = "update servicios set total=total-1 where idservicio='$data2'";
+    $upd = $db->query($updservicio);
 }
 ?>
 

@@ -148,7 +148,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                         <label>Descripción:</label>
                         <textarea name="descrip" id="descripActualizar" class="form-control" required></textarea>
                         <label>Total de estudios por hacer:</label>
-                        <input type="number" name="total" id="costoActualizar" class="form-control" required>
+                        <input type="number" name="total" id="total" class="form-control" required>
                         <br>
                         <button type="submit" class="btn btn-success">Guardar Cambios</button>
                     </form>
@@ -326,6 +326,7 @@ include '../conectarsislab.php'; // Archivo de conexión a la base de datos
                     $("#nombreActualizar").val(estudio.nombre);
                     $("#costoActualizar").val(estudio.costo);
                     $("#descripActualizar").val(estudio.descrip);
+                    $("#total").val(estudio.total);
                     $("#modalActualizarEstudio").modal('show');
                 }
             });
