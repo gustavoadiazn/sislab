@@ -111,7 +111,7 @@
     }
     $fechahoy = date("Y-m-d");
 
-    $sqlins = "Insert into servicios values(null,'$fechahoy','','True',4,1,1,1,$idp)";
+    $sqlins = "Insert into servicios values(null,'$fechahoy','','0',4,1,1,1,$idp)";
     if ($db->query($sqlins) === FALSE) {
         echo "Estudio NO agregado, CUIDADO";
     }
