@@ -105,13 +105,13 @@
     <?php
     include("conectarsislab.php");
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $idp = $_POST['idp'];
+        echo $idp = $_POST['idp'];
     } else {
         $idp = $_GET['ipd'];
     }
     $fechahoy = date("Y-m-d");
 
-    $sqlins = "Insert into servicios values(null,'$fechahoy','','0',4,1,1,1,$idp)";
+    $sqlins = "Insert into servicios values(null,'$fechahoy','',0,4,1,1,1,$idp)";
     if ($db->query($sqlins) === FALSE) {
         echo "Estudio NO agregado, CUIDADO";
     }
@@ -271,7 +271,7 @@
                         </div>
                         <hr class="divider" />
                         <!-- Submit Button-->
-                        <div><a class="btn btn-primary btn-xl" id="submitButton" target="_self" name="Guardar" href="home.php" onclick="window.open('imprimirServicio.php', '_blank');">Imprimir</a><a class="btn btn-warning btn-xl" name="Cancel" id="submitButton2" target="_self" href="cancelarServicio.php?ids=<?php echo $ult; ?>">Cancelar</a></div>
+                        <div><a class="btn btn-primary btn-xl" id="submitButton" target="_self" name="Guardar" href="home.php">Guardar</a><a class="btn btn-warning btn-xl" name="Cancel" id="submitButton2" target="_self" href="cancelarServicio.php?ids=<?php echo $ult; ?>">Cancelar</a></div>
                     </form>
                 </div>
             </div>
