@@ -16,3 +16,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $conn->error;
     }
 }
+?>
+<html>
+
+<head>
+    <title>Redirigir al navegador a otra URL</title>
+    <META HTTP-EQUIV="REFRESH" CONTENT="0;URL=home.php">
+
+</head>
+
+<body>
+
+</body>
+
+</html>
