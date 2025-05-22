@@ -156,7 +156,7 @@
             </div>
             <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                 <div class="col-lg-6">
-                    <form id="contactForm" name="form">
+                    <form id="contactForm" name="form" method="post" action="updServicio.php">
                         <!-- Name input-->
                         <div class="containerCol">
                             <div class="columnCol">
@@ -271,7 +271,8 @@
                         </div>
                         <hr class="divider" />
                         <!-- Submit Button-->
-                        <div><a class="btn btn-primary btn-xl" id="submitButton" target="_self" name="Guardar" href="home.php">Guardar</a><a class="btn btn-warning btn-xl" name="Cancel" id="submitButton2" target="_self" href="cancelarServicio.php?ids=<?php echo $ult; ?>">Cancelar</a></div>
+                        <div><input class="btn btn-primary btn-xl" id="submitButton" type="submit" name="Guardar" value="Guardar" /><a class="btn btn-warning btn-xl" name="Cancel" id="submitButton2" target="_self" href="cancelarServicio.php?ids=<?php echo $ult; ?>">Cancelar</a></div>
+                        <input type="hidden" name="ids" value="<?php echo $ult; ?>" />
                     </form>
                 </div>
             </div>

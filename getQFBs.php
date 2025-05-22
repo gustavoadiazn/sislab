@@ -15,7 +15,7 @@ if ($busqueda <> '') {
         if ($row = $result->fetch_array()) {
             $i = 0;
             do {
-                $idmedico = $row['idqfb'];
+                $idqfb = $row['idqfb'];
                 $nom = utf8_encode($row['nombre']);
                 if ($i == 0) {
                     print "<option value='" . $idqfb . "' selected>" . $nom . "</option>";
